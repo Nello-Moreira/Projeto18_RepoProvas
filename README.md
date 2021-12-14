@@ -60,6 +60,7 @@ This will create a production, a development and a test database and envs variab
 
 - status code: 201 created
 - status code: 400 bad request (for invalid body)
+- status code: 409 conflict (if email provided is already in use)
 </details>
 <br />
 
