@@ -12,15 +12,15 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/Nello-Moreira/Projeto18_RepoProvas.git"
+		"url": "git+https://github.com/Nello-Moreira/Projeto18_RepoProvas_back-end.git"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/Nello-Moreira/Projeto18_RepoProvas/issues"
+		"url": "https://github.com/Nello-Moreira/Projeto18_RepoProvas_back-end/issues"
 	},
-	"homepage": "https://github.com/Nello-Moreira/Projeto18_RepoProvas#readme",
+	"homepage": "https://github.com/Nello-Moreira/Projeto18_RepoProvas_back-end#readme",
 	"dependencies": {
 		"bcrypt": "^5.0.1",
 		"cors": "^2.8.5",
@@ -50,6 +50,7 @@
 		"faker": "^5.5.3",
 		"husky": "^7.0.4",
 		"jest": "^27.3.1",
+		"nodemon": "^2.0.15",
 		"prettier": "2.4.1",
 		"readline-sync": "^1.4.10",
 		"supertest": "^6.1.6",
