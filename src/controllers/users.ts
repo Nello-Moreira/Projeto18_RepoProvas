@@ -51,7 +51,7 @@ async function signUp(
 	try {
 		await usersService.signUp(signUpBody);
 
-		return response.sendStatus(HttpStatusCodes.ok);
+		return response.sendStatus(HttpStatusCodes.created);
 	} catch (error) {
 		if (error instanceof ConflictError) {
 			return response.status(HttpStatusCodes.conflict).send(error.message);
