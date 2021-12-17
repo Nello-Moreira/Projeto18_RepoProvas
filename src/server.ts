@@ -1,6 +1,9 @@
 import '../setup/dotenvSetup';
+import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
+
+import dbConnect from './repositories/connection';
 
 import databaseErrorMiddleware from './middlewares/databaseError';
 
@@ -31,5 +34,9 @@ server.use('/professors', professorsRouter);
 server.use('/courses', coursesRouter);
 
 server.use(databaseErrorMiddleware);
+
+export async function init() {
+	await dbConnect();
+}
 
 export default server;

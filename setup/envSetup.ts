@@ -12,11 +12,7 @@ const createEnvs = ({ username, password, databaseName }: Settings) => {
 		try {
 			fs.writeFileSync(
 				`${env ? `${pathToCreate}/.${env}.env` : `${pathToCreate}/.env`}`,
-				`${
-					env
-						? `DB_USER=${username}\nDB_PASSWORD=${password}\nDB_PORT=5432\nDB_HOST=localhost\nDB_DATABASE=${databaseName}_${env}\nPORT=8080\nJWT_SECRET=educationalPurpose`
-						: `DATABASE_URL=postgres://${username}:${password}@localhost:5432/${databaseName}\nPORT=8080\nJWT_SECRET=educationalPurpose`
-				}`
+				`DATABASE_URL=postgres://${username}:${password}@localhost:5432/${databaseName}\nPORT=8080\nJWT_SECRET=educationalPurpose`
 			);
 		} catch (error) {
 			console.log(error);

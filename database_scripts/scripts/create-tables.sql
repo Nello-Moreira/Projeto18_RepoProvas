@@ -8,6 +8,8 @@ CREATE TABLE "users" (
   OIDS=FALSE
 );
 
+
+
 CREATE TABLE "sessions" (
 	"id" serial NOT NULL,
 	"user_id" integer NOT NULL,
@@ -17,6 +19,8 @@ CREATE TABLE "sessions" (
   OIDS=FALSE
 );
 
+
+
 CREATE TABLE "teachers" (
 	"id" serial NOT NULL,
 	"name" serial NOT NULL,
@@ -24,6 +28,8 @@ CREATE TABLE "teachers" (
 ) WITH (
   OIDS=FALSE
 );
+
+
 
 CREATE TABLE "subjects" (
 	"id" serial NOT NULL,
@@ -35,6 +41,8 @@ CREATE TABLE "subjects" (
   OIDS=FALSE
 );
 
+
+
 CREATE TABLE "categories" (
 	"id" serial NOT NULL,
 	"name" TEXT NOT NULL,
@@ -42,6 +50,8 @@ CREATE TABLE "categories" (
 ) WITH (
   OIDS=FALSE
 );
+
+
 
 CREATE TABLE "exams" (
 	"id" serial NOT NULL,
@@ -55,6 +65,8 @@ CREATE TABLE "exams" (
   OIDS=FALSE
 );
 
+
+
 CREATE TABLE "teachers_subjects" (
 	"id" serial NOT NULL,
 	"teacher_id" integer NOT NULL,
@@ -64,6 +76,8 @@ CREATE TABLE "teachers_subjects" (
   OIDS=FALSE
 );
 
+
+
 CREATE TABLE "courses" (
 	"id" serial NOT NULL,
 	"name" TEXT NOT NULL,
@@ -71,6 +85,8 @@ CREATE TABLE "courses" (
 ) WITH (
   OIDS=FALSE
 );
+
+
 
 CREATE TABLE "seasons" (
 	"id" serial NOT NULL,
@@ -80,10 +96,13 @@ CREATE TABLE "seasons" (
   OIDS=FALSE
 );
 
+
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+
 
 ALTER TABLE "subjects" ADD CONSTRAINT "subjects_fk0" FOREIGN KEY ("course_id") REFERENCES "courses"("id");
 ALTER TABLE "subjects" ADD CONSTRAINT "subjects_fk1" FOREIGN KEY ("season_id") REFERENCES "seasons"("id");
+
 
 ALTER TABLE "exams" ADD CONSTRAINT "exams_fk0" FOREIGN KEY ("category_id") REFERENCES "categories"("id");
 ALTER TABLE "exams" ADD CONSTRAINT "exams_fk1" FOREIGN KEY ("subject_id") REFERENCES "subjects"("id");
@@ -93,21 +112,23 @@ ALTER TABLE "teachers_subjects" ADD CONSTRAINT "teachers_subjects_fk0" FOREIGN K
 ALTER TABLE "teachers_subjects" ADD CONSTRAINT "teachers_subjects_fk1" FOREIGN KEY ("subject_id") REFERENCES "subjects"("id");
 
 
-INSERT INTO "courses" ("name")
-VALUES ("Engenharia Qualquer"), ("Química");
+INSERT INTO "courses" ("name") VALUES
+('Engenharia Qualquer'), ('Química');
 
-INSERT INTO "subjects" ("name", "course_id", "season_id")
-VALUES ("A mais chata", 1, 1), ("A mais legal", 1, 10), ("Reações", 2, 6), ("Equilíbrio de fases", 2, 4);
+INSERT INTO "subjects" ("name", "course_id", "season_id") VALUES
+('A mais chata', 1, 1), ('A mais legal', 1, 10),
+('Reações', 2, 6), ('Equilíbrio de fases', 2, 4);
 
-INSERT INTO "teachers" ("name")
-VALUES ("Sr. Ninguém Liga Jr."), ("Sempre Falta da Silva");
+INSERT INTO "teachers" ("name") VALUES
+('Sr. Ninguém Liga Jr.'), ('Sempre Falta da Silva');
 
-INSERT INTO "teachers_subjects" ("teacher_id", "subject_id")
-VALUES (1,1), (2,2), (2,3), (2,4);
+INSERT INTO "teachers_subjects" ("teacher_id", "subject_id") VALUES
+(1,1), (2,2), (2,3), (2,4);
 
-INSERT INTO "categories" ("name")
-VALUES ("P1"),("P2"),("P3"),("2ch"),("Outras");
+INSERT INTO "categories" ("name") VALUES
+('P1'),('P2'),('P3'),('2ch'),('Outras');
 
-INSERT INTO "seasons" ("name")
-VALUES ("1"), ("2"), ("3"), ("4"), ("5"),
-("6"), ("7"), ("8"), ("9"), ("10"), ("11"), ("12"), ("Eletiva");
+INSERT INTO "seasons" ("name") VALUES
+('1'), ('2'), ('3'), ('4'), ('5'),
+('6'), ('7'), ('8'), ('9'), ('10'),
+('11'), ('12'), ('Eletiva');

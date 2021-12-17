@@ -2,6 +2,10 @@
 	"compilerOptions": {
 		"noImplicitAny": true,
 		"esModuleInterop": true,
-		"target": "ES6"
-	}
+		"target": "ES6",
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true
+	},
+	"exclude": ["node_modules", "tests"]
 }
