@@ -1,7 +1,7 @@
-interface UserCreation {
+import UserLogin from './UserLogin';
+
+interface UserCreation extends UserLogin{
 	name: string;
-	email: string;
-	password: string;
 }
 
 export default UserCreation;

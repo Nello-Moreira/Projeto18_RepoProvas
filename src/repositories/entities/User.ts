@@ -1,4 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+/* eslint-disable import/no-cycle */
+import {
+	Entity, PrimaryGeneratedColumn, Column, OneToMany,
+} from 'typeorm';
+import Session from './Session';
 
 @Entity('users')
 export default class User {
@@ -13,4 +17,7 @@ export default class User {
 
 	@Column()
 		password: string;
+
+	@OneToMany(() => Session, (session) => session.user)
+		sessions: Session[];
 }
