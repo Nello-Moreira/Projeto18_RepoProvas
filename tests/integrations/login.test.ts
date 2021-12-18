@@ -1,4 +1,5 @@
 import supertest from 'supertest';
+import { getRepository } from 'typeorm';
 import server, { init } from '../../src/server';
 
 import HttpStatusCodes from '../../src/enums/statusCodes';
@@ -6,6 +7,8 @@ import { createUser } from '../factories/user';
 
 import { insertUser, deleteAllUsers, deleteAllSessions } from '../repositories/users';
 import { closeConnection } from '../repositories/connection';
+import Session from '../../src/repositories/entities/Session';
+import User from '../../src/repositories/entities/User';
 
 const route = '/login';
 
@@ -60,7 +63,12 @@ describe('Tests for post /login', () => {
 			email: user.email,
 			password: user.password,
 		});
+
+		const databaseUser = await getRepository(User).findOne({ email: user.email });
+		const inserted = await getRepository(Session).find({ userId: databaseUser.id });
+
 		expect(response.status).toBe(HttpStatusCodes.ok);
 		expect(response.body).toHaveProperty('token');
+		expect(inserted).toHaveLength(1);
 	});
 });
