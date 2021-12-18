@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 
 import usersRepository from '../repositories/users';
-import { hashPassword, isCorrectPassword } from '../helpers/passwordEncrypt';
 
 import UserCreation from '../protocols/UserCreation';
 import ConflictError from '../errors/Conflict';
@@ -15,11 +14,7 @@ async function signUp(user: UserCreation): Promise<boolean> {
 		throw new ConflictError('There is already a user registered with that email');
 	}
 
-	await usersRepository.createUser({
-		name: user.name,
-		email: user.email,
-		password: hashPassword(user.password),
-	});
+	await usersRepository.createUser(user);
 
 	return true;
 }
@@ -31,10 +26,7 @@ async function login(user: UserLogin): Promise<{ token:string }> {
 		throw new NotFoundError('Incorrect email or password');
 	}
 
-	if (!isCorrectPassword({
-		password: user.password,
-		hashedPassword: existingUser.password,
-	})) {
+	if (existingUser.isCorrectPassword(user.password)) {
 		throw new NotFoundError('Incorrect email or password');
 	}
 

@@ -28,11 +28,14 @@ describe('Tests for post /sign-up', () => {
 			.where('id >= :id', { id: 1 })
 			.execute();
 
-		await getRepository(User).insert({
+		const newUser = getRepository(User).create({
 			name: user.name,
 			email: user.email,
-			password: user.password,
 		});
+
+		newUser.password = user.password;
+
+		await getRepository(User).save(newUser);
 	});
 
 	afterAll(async () => {

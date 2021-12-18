@@ -10,7 +10,14 @@ async function findUserByEmail(email:string) {
 }
 
 async function createUser(user:UserCreation):Promise<boolean> {
-	await getRepository(User).insert(user);
+	const newUser = getRepository(User).create({
+		name: user.name,
+		email: user.email,
+	});
+
+	newUser.password = user.password;
+
+	await getRepository(User).save(newUser);
 	return true;
 }
 
