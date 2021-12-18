@@ -27,6 +27,12 @@ export default async function authorizationMiddleware(
 
 		const activeSession = await usersRepository.findSessionByToken(token);
 
+		if (!activeSession) {
+			return response
+				.status(HttpStatusCodes.unauthorized)
+				.send('Invalid or expired token');
+		}
+
 		response.locals = { userId: activeSession.userId };
 	} catch (error) {
 		usersRepository.deleteSession(token);
