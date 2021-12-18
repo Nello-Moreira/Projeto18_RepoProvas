@@ -1,4 +1,5 @@
 import { getConnection, getRepository } from 'typeorm';
+import jwt from 'jsonwebtoken';
 
 import User from '../../src/repositories/entities/User';
 import Session from '../../src/repositories/entities/Session';
@@ -10,7 +11,7 @@ async function insertUser(user:{ id:number, name:string, email:string, password:
 	});
 	newUser.password = user.password;
 
-	await getRepository(User).save(newUser);
+	return getRepository(User).save(newUser);
 }
 
 async function deleteAllUsers() {
@@ -31,4 +32,22 @@ async function deleteAllSessions() {
 		.execute();
 }
 
-export { insertUser, deleteAllUsers, deleteAllSessions };
+async function insertSession(user:{ id:number, name:string, email:string, password:string }) {
+	const token = jwt.sign(
+		{ name: user.name },
+		process.env.JWT_SECRET,
+		{ expiresIn: '1d' }
+	);
+
+	const newSession = new Session();
+	newSession.userId = user.id;
+	newSession.token = token;
+	return getConnection().manager.save(newSession);
+}
+
+export {
+	insertUser,
+	insertSession,
+	deleteAllUsers,
+	deleteAllSessions,
+};

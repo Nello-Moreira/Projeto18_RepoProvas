@@ -17,6 +17,7 @@ describe('Tests for post /login', () => {
 
 	beforeAll(async () => {
 		await init();
+		await deleteAllSessions();
 		await deleteAllUsers();
 	});
 
