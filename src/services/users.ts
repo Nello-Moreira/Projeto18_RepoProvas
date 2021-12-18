@@ -26,7 +26,7 @@ async function login(user: UserLogin): Promise<{ token:string }> {
 		throw new NotFoundError('Incorrect email or password');
 	}
 
-	if (existingUser.isCorrectPassword(user.password)) {
+	if (!existingUser.isCorrectPassword(user.password)) {
 		throw new NotFoundError('Incorrect email or password');
 	}
 
