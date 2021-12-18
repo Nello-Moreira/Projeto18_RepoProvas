@@ -40,4 +40,9 @@ async function login(user: UserLogin): Promise<{ token:string }> {
 	return { token };
 }
 
-export default { signUp, login };
+async function logout(token: string): Promise<boolean> {
+	await usersRepository.deleteSession(token);
+	return true;
+}
+
+export default { signUp, login, logout };

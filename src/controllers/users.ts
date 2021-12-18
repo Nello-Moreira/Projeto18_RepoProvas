@@ -61,12 +61,9 @@ async function logout(
 	next: NextFunction
 ) {
 	try {
-		return response.sendStatus(HttpStatusCodes.notImplemented);
+		await usersService.logout(response.locals.token);
+		return response.sendStatus(HttpStatusCodes.ok);
 	} catch (error) {
-		if (error instanceof NotFoundError) {
-			return response.sendStatus(HttpStatusCodes.notFound);
-		}
-
 		return next(error);
 	}
 }

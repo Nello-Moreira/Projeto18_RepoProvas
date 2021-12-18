@@ -33,9 +33,9 @@ export default async function authorizationMiddleware(
 				.send('Invalid or expired token');
 		}
 
-		response.locals = { userId: activeSession.userId };
+		response.locals = { userId: activeSession.userId, token };
 	} catch (error) {
-		usersRepository.deleteSession(token);
+		await usersRepository.deleteSession(token);
 		return response
 			.status(HttpStatusCodes.unauthorized)
 			.send('Invalid or expired token');
