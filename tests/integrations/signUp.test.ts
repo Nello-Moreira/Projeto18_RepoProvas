@@ -1,9 +1,12 @@
 import supertest from 'supertest';
-import { getRepository, getConnection } from 'typeorm';
+import { getRepository } from 'typeorm';
 import server, { init } from '../../src/server';
 import User from '../../src/repositories/entities/User';
 
 import { createUser } from '../factories/user';
+
+import { insertUser, deleteAllUsers } from '../repositories/users';
+import { closeConnection } from '../repositories/connection';
 
 const route = '/sign-up';
 
@@ -12,34 +15,16 @@ describe('Tests for post /sign-up', () => {
 
 	beforeAll(async () => {
 		await init();
-		await getConnection()
-			.createQueryBuilder()
-			.delete()
-			.from(User)
-			.where('id >= :id', { id: 1 })
-			.execute();
+		await deleteAllUsers();
 	});
 
 	afterEach(async () => {
-		await getConnection()
-			.createQueryBuilder()
-			.delete()
-			.from(User)
-			.where('id >= :id', { id: 1 })
-			.execute();
-
-		const newUser = getRepository(User).create({
-			name: user.name,
-			email: user.email,
-		});
-
-		newUser.password = user.password;
-
-		await getRepository(User).save(newUser);
+		await deleteAllUsers();
+		await insertUser(user);
 	});
 
 	afterAll(async () => {
-		await getConnection().close();
+		await closeConnection();
 	});
 
 	it('should return status code 201 when user is created', async () => {
