@@ -6,6 +6,7 @@ import cors from 'cors';
 import dbConnect from './repositories/connection';
 
 import databaseErrorMiddleware from './middlewares/databaseError';
+import authorizationMiddleware from './middlewares/authorization';
 
 import signUpRouter from './routers/signUp';
 import loginRouter from './routers/login';
@@ -22,6 +23,8 @@ server.use(express.json());
 server.use('/sign-up', signUpRouter);
 
 server.use('/login', loginRouter);
+
+server.use(authorizationMiddleware);
 
 server.use('/logout', logoutRouter);
 

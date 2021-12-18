@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 import HttpStatusCodes from '../enums/statusCodes';
+import usersRepository from '../repositories/users';
 
-async function tokenMiddleware(
+export default async function authorizationMiddleware(
 	request: Request,
 	response: Response,
 	next: NextFunction
@@ -9,47 +11,29 @@ async function tokenMiddleware(
 	const token = request.headers.authorization?.replace('Bearer ', '');
 
 	if (!token) {
-		return response.sendStatus(HttpStatusCodes.unauthorized);
+		return response
+			.status(HttpStatusCodes.unauthorized)
+			.send("It's necessary to provide an authorization token");
 	}
 
-	/*
-
-    you need to implement a token validation here and delete next declaration. For example:
-
-	const invalidToken = isInvalidToken({ token });
-
-	*/
-
-	const isInvalidToken = () => {
-		// eslint-disable-next-line no-console
-		console.warn('you need to implement a method for token validation');
-		return true;
-	};
-	const invalidToken = isInvalidToken();
-
-	if (invalidToken) {
-		return response.sendStatus(HttpStatusCodes.unauthorized);
+	if (typeof token !== 'string') {
+		return response
+			.status(HttpStatusCodes.badRequest)
+			.send('Invalid token');
 	}
 
-	/*
+	try {
+		jwt.verify(token, process.env.JWT_SECRET);
 
-	you may implement a function to get session here. For example:
+		const activeSession = await usersRepository.findSessionByToken(token);
 
-	const session = await userRepository.searchSession({ token });
-
-	if (!session) {
-		return response.sendStatus(500);
+		response.locals = { userId: activeSession.userId };
+	} catch (error) {
+		usersRepository.deleteSession(token);
+		return response
+			.status(HttpStatusCodes.unauthorized)
+			.send('Invalid or expired token');
 	}
-
-	if (session.rowCount === 0) {
-		return response.sendStatus(401);
-	}
-
-	response.locals = { userId: session.rows[0].userId };
-
-	*/
 
 	return next();
 }
-
-export default tokenMiddleware;

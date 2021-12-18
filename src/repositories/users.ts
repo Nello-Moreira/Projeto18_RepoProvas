@@ -30,4 +30,19 @@ async function createSession(session:{ userId:number, token:string }):Promise<bo
 	return true;
 }
 
-export default { createUser, findUserByEmail, createSession };
+async function deleteSession(token:string):Promise<boolean> {
+	await getRepository(Session).delete({ token });
+	return true;
+}
+
+async function findSessionByToken(token:string) {
+	return getRepository(Session).findOne({ token });
+}
+
+export default {
+	createUser,
+	findUserByEmail,
+	createSession,
+	deleteSession,
+	findSessionByToken,
+};

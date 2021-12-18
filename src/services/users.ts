@@ -31,7 +31,7 @@ async function login(user: UserLogin): Promise<{ token:string }> {
 	}
 
 	const token = jwt.sign(
-		{ id: existingUser.id },
+		{ name: existingUser.name },
 		process.env.JWT_SECRET,
 		{ expiresIn: '1d' }
 	);
