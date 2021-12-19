@@ -23,7 +23,7 @@ CREATE TABLE "sessions" (
 
 CREATE TABLE "teachers" (
 	"id" serial NOT NULL,
-	"name" serial NOT NULL,
+	"name" TEXT NOT NULL,
 	CONSTRAINT "teachers_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -115,20 +115,20 @@ ALTER TABLE "teachers_subjects" ADD CONSTRAINT "teachers_subjects_fk1" FOREIGN K
 INSERT INTO "courses" ("name") VALUES
 ('Engenharia Qualquer'), ('Química');
 
-INSERT INTO "subjects" ("name", "course_id", "season_id") VALUES
-('A mais chata', 1, 1), ('A mais legal', 1, 10),
-('Reações', 2, 6), ('Equilíbrio de fases', 2, 4);
-
-INSERT INTO "teachers" ("name") VALUES
-('Sr. Ninguém Liga Jr.'), ('Sempre Falta da Silva');
-
-INSERT INTO "teachers_subjects" ("teacher_id", "subject_id") VALUES
-(1,1), (2,2), (2,3), (2,4);
-
-INSERT INTO "categories" ("name") VALUES
-('P1'),('P2'),('P3'),('2ch'),('Outras');
-
 INSERT INTO "seasons" ("name") VALUES
 ('1'), ('2'), ('3'), ('4'), ('5'),
 ('6'), ('7'), ('8'), ('9'), ('10'),
 ('11'), ('12'), ('Eletiva');
+
+INSERT INTO "teachers" ("name") VALUES
+('Sr. Ninguém Liga Jr.'), ('Sempre Falta da Silva');
+
+INSERT INTO "categories" ("name") VALUES
+('P1'),('P2'),('P3'),('2ch'),('Outras');
+
+INSERT INTO "subjects" ("name", "course_id", "season_id") VALUES
+('A mais chata', '1', '1'), ('A mais legal', '1', '10'),
+('Reações', '2', '6'), ('Equilíbrio de fases', '2', '4');
+
+INSERT INTO "teachers_subjects" ("teacher_id", "subject_id") VALUES
+('1','1'), ('2','2'), ('2','3'), ('2','4');
