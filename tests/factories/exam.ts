@@ -7,7 +7,7 @@ import ISubject from '../../src/protocols/Subject';
 import ICategory from '../../src/protocols/Category';
 import ITeacher from '../../src/protocols/Teacher';
 
-function createSubject(
+function createExam(
 	subject:ISubject,
 	category:ICategory,
 	teacher:ITeacher,
@@ -24,4 +24,4 @@ function createSubject(
 	};
 }
 
-export { createSubject };
+export { createExam };

@@ -1,6 +1,7 @@
 import { getConnection, getRepository } from 'typeorm';
 
 import Season from '../../src/repositories/entities/Season';
+import ISeason from '../../src/protocols/Season';
 
 import { deleteAllSubjects } from './subjects';
 
@@ -15,8 +16,8 @@ async function deleteAllSeasons() {
 		.execute();
 }
 
-async function insertSeason(name:string) {
-	const newSeason = getRepository(Season).create({ name });
+async function insertSeason(season:ISeason) {
+	const newSeason = getRepository(Season).create(season);
 	return getRepository(Season).save(newSeason);
 }
 

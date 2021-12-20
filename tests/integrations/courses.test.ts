@@ -27,8 +27,7 @@ describe('Tests for get /courses', () => {
 		const insertedUser = await insertUser(user);
 		user.id = insertedUser.id;
 
-		const insertedSession = await insertSession(user);
-		session = insertedSession;
+		session = await insertSession(user);
 	});
 
 	afterEach(async () => {
