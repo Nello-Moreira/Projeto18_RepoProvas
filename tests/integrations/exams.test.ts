@@ -23,9 +23,9 @@ import { deleteAllTeachers, insertTeacher } from '../repositories/teachers';
 import { insertCategory } from '../repositories/categories';
 import { deleteAllExams, insertExam } from '../repositories/exams';
 
-const route = '/professors/:id';
+const route = '/exams';
 
-describe('Tests for get /professors/:id', () => {
+describe('Tests for post /exams', () => {
 	const user = createUser();
 	let course = createCourse();
 	let season = createSeason();
@@ -75,43 +75,87 @@ describe('Tests for get /professors/:id', () => {
 		await closeConnection();
 	});
 
-	it('should return status code 200 and an array of exams', async () => {
+	it('should return status code 409 when exam is already posted', async () => {
 		const response = await supertest(server)
-			.get(route.replace(':id', `${teacher.id}`))
+			.post(route)
+			.send({
+				name: exam.name,
+				fileUrl: exam.fileUrl,
+				categoryId: exam.categoryId,
+				subjectId: exam.subjectId,
+				professorId: exam.teacherId,
+			})
 			.set('authorization', `Bearer ${session.token}`);
 
-		expect(response.status).toBe(HttpStatusCodes.ok);
-		expect(response.body).toHaveLength(1);
-		expect(response.body[0]).toEqual({
-			id: exam.id,
-			name: exam.name,
-			fileUrl: exam.fileUrl,
-			category: category.name,
-			subject: subject.name,
-		});
+		expect(response.status).toBe(HttpStatusCodes.conflict);
 	});
 
-	it('should return status code 400 for invalid subject id', async () => {
+	it('should return status code 201 when exam is correctly posted', async () => {
 		const response = await supertest(server)
-			.get(route.replace(':id', '0'))
+			.post(route)
+			.send({
+				name: exam.name,
+				fileUrl: exam.fileUrl,
+				categoryId: exam.categoryId,
+				subjectId: exam.subjectId,
+				professorId: exam.teacherId,
+			})
+			.set('authorization', `Bearer ${session.token}`);
+
+		expect(response.status).toBe(HttpStatusCodes.created);
+	});
+
+	it('should return status code 400 for invalid body', async () => {
+		const response = await supertest(server)
+			.post(route)
+			.send({})
 			.set('authorization', `Bearer ${session.token}`);
 
 		expect(response.status).toBe(HttpStatusCodes.badRequest);
 	});
 
-	it('should return status code 404 when there is no subject with provided id', async () => {
+	it('should return status code 404 when there is no professor with provided id', async () => {
 		const response = await supertest(server)
-			.get(route.replace(':id', `${teacher.id + 1}`))
+			.post(route)
+			.send({
+				name: exam.name,
+				fileUrl: exam.fileUrl,
+				categoryId: exam.categoryId,
+				subjectId: exam.subjectId,
+				professorId: exam.teacherId + 1,
+			})
 			.set('authorization', `Bearer ${session.token}`);
 
 		expect(response.status).toBe(HttpStatusCodes.notFound);
 	});
 
-	it('should return status code 204 when there are no exams', async () => {
+	it('should return status code 404 when there is no subject with provided id', async () => {
 		const response = await supertest(server)
-			.get(route.replace(':id', `${teacher.id}`))
+			.post(route)
+			.send({
+				name: exam.name,
+				fileUrl: exam.fileUrl,
+				categoryId: exam.categoryId,
+				subjectId: exam.subjectId + 1,
+				professorId: exam.teacherId,
+			})
 			.set('authorization', `Bearer ${session.token}`);
 
-		expect(response.status).toBe(HttpStatusCodes.noContent);
+		expect(response.status).toBe(HttpStatusCodes.notFound);
+	});
+
+	it('should return status code 404 when there is no category with provided id', async () => {
+		const response = await supertest(server)
+			.post(route)
+			.send({
+				name: exam.name,
+				fileUrl: exam.fileUrl,
+				categoryId: exam.categoryId + 1,
+				subjectId: exam.subjectId,
+				professorId: exam.teacherId,
+			})
+			.set('authorization', `Bearer ${session.token}`);
+
+		expect(response.status).toBe(HttpStatusCodes.notFound);
 	});
 });

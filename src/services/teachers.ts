@@ -3,7 +3,7 @@ import NoContentError from '../errors/NoContent';
 import NotFoundError from '../errors/NotFound';
 
 async function findTeacherExams(teacherId: number) {
-	const teacher = await teachersRepository.findTeacherById(teacherId);
+	const teacher = await teachersRepository.findTeacherExams(teacherId);
 
 	if (!teacher) {
 		throw new NotFoundError(`There are no teachers with id ${teacherId}`);
