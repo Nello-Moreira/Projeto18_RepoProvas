@@ -20,7 +20,9 @@ describe('Tests for post /sign-up', () => {
 
 	afterEach(async () => {
 		await deleteAllUsers();
-		await insertUser(user);
+
+		const insertedUser = await insertUser(user);
+		user.id = insertedUser.id;
 	});
 
 	afterAll(async () => {

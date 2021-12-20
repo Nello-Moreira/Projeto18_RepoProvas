@@ -19,15 +19,11 @@ describe('Tests for post /logout', () => {
 		await init();
 		await deleteAllSessions();
 		await deleteAllUsers();
+
 		const insertedUser = await insertUser(user);
 		user.id = insertedUser.id;
-		session = await insertSession(user);
-	});
 
-	afterEach(async () => {
-		await deleteAllSessions();
-		await deleteAllUsers();
-		await insertUser(user);
+		session = await insertSession(user);
 	});
 
 	afterAll(async () => {

@@ -3,7 +3,6 @@ import { getRepository } from 'typeorm';
 import server, { init } from '../../src/server';
 import HttpStatusCodes from '../../src/enums/statusCodes';
 import Session from '../../src/repositories/entities/Session';
-import User from '../../src/repositories/entities/User';
 
 import { createUser } from '../factories/user';
 import { insertUser, deleteAllUsers, deleteAllSessions } from '../repositories/users';
@@ -23,7 +22,9 @@ describe('Tests for post /login', () => {
 	afterEach(async () => {
 		await deleteAllSessions();
 		await deleteAllUsers();
-		await insertUser(user);
+
+		const insertedUser = await insertUser(user);
+		user.id = insertedUser.id;
 	});
 
 	afterAll(async () => {
@@ -64,8 +65,7 @@ describe('Tests for post /login', () => {
 			password: user.password,
 		});
 
-		const databaseUser = await getRepository(User).findOne({ email: user.email });
-		const inserted = await getRepository(Session).find({ userId: databaseUser.id });
+		const inserted = await getRepository(Session).find({ userId: user.id });
 
 		expect(response.status).toBe(HttpStatusCodes.ok);
 		expect(response.body).toHaveProperty('token');

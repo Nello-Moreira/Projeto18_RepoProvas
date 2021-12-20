@@ -16,7 +16,7 @@ const route = '/courses';
 describe('Tests for get /courses', () => {
 	const user = createUser();
 	let session:ISession;
-	const course = createCourse();
+	let course = createCourse();
 
 	beforeAll(async () => {
 		await init();
@@ -32,8 +32,7 @@ describe('Tests for get /courses', () => {
 	});
 
 	afterEach(async () => {
-		const insertedCourse = await insertCourse(course.name);
-		course.id = insertedCourse.id;
+		course = await insertCourse(course);
 	});
 
 	afterAll(async () => {

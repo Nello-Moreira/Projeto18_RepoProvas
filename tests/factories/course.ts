@@ -6,7 +6,6 @@ function createCourse(name:string = null):ICourse {
 	const newName = createNewName(name);
 
 	return {
-		id: null,
 		name: newName,
 	};
 }

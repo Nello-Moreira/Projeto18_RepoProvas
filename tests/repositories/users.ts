@@ -7,22 +7,10 @@ import Session from '../../src/repositories/entities/Session';
 import IUser from '../../src/protocols/User';
 
 async function insertUser(user:IUser) {
-	const newUser = getRepository(User).create({
-		name: user.name,
-		email: user.email,
-	});
+	const newUser = getRepository(User).create(user);
 	newUser.password = user.password;
 
 	return getRepository(User).save(newUser);
-}
-
-async function deleteAllUsers() {
-	await getConnection()
-		.createQueryBuilder()
-		.delete()
-		.from(User)
-		.where('id >= :id', { id: 1 })
-		.execute();
 }
 
 async function deleteAllSessions() {
@@ -30,6 +18,17 @@ async function deleteAllSessions() {
 		.createQueryBuilder()
 		.delete()
 		.from(Session)
+		.where('id >= :id', { id: 1 })
+		.execute();
+}
+
+async function deleteAllUsers() {
+	await deleteAllSessions();
+
+	await getConnection()
+		.createQueryBuilder()
+		.delete()
+		.from(User)
 		.where('id >= :id', { id: 1 })
 		.execute();
 }

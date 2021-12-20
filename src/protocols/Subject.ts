@@ -1,4 +1,4 @@
-export default interface ISubjects{
+export default interface ISubject{
 	id?:number;
 	name:string;
 	courseId:number;

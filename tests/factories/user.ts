@@ -13,7 +13,6 @@ function createUser(name:string = null):IUser {
 	}
 
 	return {
-		id: null,
 		name: newName,
 		email: faker.internet.email(newName),
 		password: faker.internet.password(6),
@@ -28,7 +27,6 @@ function createSession(user:IUser):ISession {
 	);
 
 	return {
-		id: null,
 		userId: user.id,
 		token,
 	};
