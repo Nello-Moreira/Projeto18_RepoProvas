@@ -1,6 +1,6 @@
-export default interface ITeachersSubjects{
+export default interface ISubjects{
 	id?:number;
 	name:string;
-	course_id:number;
-	season_id:number;
+	courseId:number;
+	seasonId:number;
 }
