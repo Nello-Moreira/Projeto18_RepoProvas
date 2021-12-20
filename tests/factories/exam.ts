@@ -16,7 +16,6 @@ function createSubject(
 	const newName = createNewName(name);
 
 	return {
-		id: null,
 		name: newName,
 		fileUrl: faker.internet.url(),
 		categoryId: category.id,

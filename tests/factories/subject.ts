@@ -8,7 +8,6 @@ function createSubject(course:ICourse, season:ISeason, name:string = null):ISubj
 	const newName = createNewName(name);
 
 	return {
-		id: null,
 		name: newName,
 		courseId: course.id,
 		seasonId: season.id,

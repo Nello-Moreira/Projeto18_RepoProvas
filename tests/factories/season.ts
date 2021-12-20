@@ -6,7 +6,6 @@ function createSeason(name:string = null):ISeason {
 	const newName = createNewName(name);
 
 	return {
-		id: null,
 		name: newName,
 	};
 }

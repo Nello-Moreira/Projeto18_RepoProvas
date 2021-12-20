@@ -6,7 +6,6 @@ function createCategory(name:string = null):ICategory {
 	const newName = createNewName(name);
 
 	return {
-		id: null,
 		name: newName,
 	};
 }
