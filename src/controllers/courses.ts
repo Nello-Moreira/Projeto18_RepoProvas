@@ -56,12 +56,26 @@ async function getProfessors(
 	response: Response,
 	next: NextFunction
 ) {
+	const courseId = Number(request.params.id);
+
+	// eslint-disable-next-line no-restricted-globals
+	if (isNaN(courseId) || courseId < 1) {
+		return response.status(HttpStatusCodes.badRequest).send('Invalid course id');
+	}
+
 	try {
-		return response.sendStatus(HttpStatusCodes.notImplemented);
+		const teachers = await coursesService.findCourseTeachers(courseId);
+
+		return response.status(HttpStatusCodes.ok).send(teachers);
 	} catch (error) {
+		if (error instanceof NotFoundError) {
+			return response.status(HttpStatusCodes.notFound).send(error.message);
+		}
+
 		if (error instanceof NoContentError) {
 			return response.sendStatus(HttpStatusCodes.noContent);
 		}
+
 		return next(error);
 	}
 }

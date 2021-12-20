@@ -28,4 +28,19 @@ async function findCourseSubjects(courseId:number) {
 	return subjects.sort((a, b) => (a.season < b.season ? -1 : 1));
 }
 
-export default { findCourses, findCourseSubjects };
+async function findCourseTeachers(courseId:number) {
+	const course = await coursesRepository.findCourseTeachers(courseId);
+
+	if (!course) {
+		throw new NotFoundError(`There are no courses with id ${courseId}`);
+	}
+
+	const teachers = course.getTeachers();
+	if (teachers.length === 0) {
+		throw new NoContentError('There are no professors for this course');
+	}
+
+	return teachers;
+}
+
+export default { findCourses, findCourseSubjects, findCourseTeachers };

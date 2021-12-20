@@ -9,4 +9,8 @@ async function findCourseSubjects(courseId: number) {
 	return getRepository(Course).findOne({ where: { id: courseId }, relations: ['subjects'] });
 }
 
-export default { findCourses, findCourseSubjects };
+async function findCourseTeachers(courseId: number) {
+	return getRepository(Course).findOne({ where: { id: courseId }, relations: ['subjects', 'subjects.teachers'] });
+}
+
+export default { findCourses, findCourseSubjects, findCourseTeachers };
