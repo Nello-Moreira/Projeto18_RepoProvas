@@ -16,7 +16,7 @@ export default class Teacher {
 	@ManyToMany(() => Subject, (subject) => subject.teachers)
 		subjects: Subject[];
 
-	@OneToMany(() => Exam, (exam) => exam.teacher, { eager: true })
+	@OneToMany(() => Exam, (exam) => exam.teacher)
 		exams: Exam[];
 
 	getTeacher() {
@@ -31,5 +31,9 @@ export default class Teacher {
 		return {
 			name: this.name,
 		};
+	}
+
+	getExams() {
+		return this.exams;
 	}
 }

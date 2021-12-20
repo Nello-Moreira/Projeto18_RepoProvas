@@ -50,7 +50,7 @@ export default class Subject {
 	})
 		teachers: Teacher[];
 
-	@OneToMany(() => Exam, (exam) => exam.subject, { eager: true })
+	@OneToMany(() => Exam, (exam) => exam.subject)
 		exams: Exam[];
 
 	getSubject() {
