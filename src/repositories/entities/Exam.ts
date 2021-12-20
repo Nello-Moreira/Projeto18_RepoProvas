@@ -43,9 +43,9 @@ export default class Exam {
 			id: this.id,
 			name: this.name,
 			fileUrl: this.fileUrl,
-			category: this.category.getCategory(),
-			teacher: this.teacher?.getTeacherName() || null,
-			subject: this.subject?.getSubjectName() || null,
+			category: this.category.getCategory().name,
+			teacher: this.teacher?.getTeacherName().name || null,
+			subject: this.subject?.getSubjectName().name || null,
 		};
 	}
 
@@ -54,8 +54,8 @@ export default class Exam {
 			id: this.id,
 			name: this.name,
 			fileUrl: this.fileUrl,
-			category: this.category.getCategory(),
-			teacher: this.teacher.getTeacherName(),
+			category: this.category.getCategory().name,
+			teacher: this.teacher.getTeacherName().name,
 		};
 	}
 
@@ -64,8 +64,8 @@ export default class Exam {
 			id: this.id,
 			name: this.name,
 			fileUrl: this.fileUrl,
-			category: this.category.getCategory(),
-			subject: this.subject.getSubjectName(),
+			category: this.category.getCategory().name,
+			subject: this.subject.getSubjectName().name,
 		};
 	}
 }

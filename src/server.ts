@@ -13,7 +13,7 @@ import loginRouter from './routers/login';
 import logoutRouter from './routers/logout';
 import examsRouter from './routers/exams';
 import subjectsRouter from './routers/subjects';
-import professorsRouter from './routers/professors';
+import teachersRouter from './routers/teachers';
 import coursesRouter from './routers/courses';
 
 const server = express();
@@ -32,7 +32,7 @@ server.use('/exams', examsRouter);
 
 server.use('/subjects', subjectsRouter);
 
-server.use('/professors', professorsRouter);
+server.use('/professors', teachersRouter);
 
 server.use('/courses', coursesRouter);
 

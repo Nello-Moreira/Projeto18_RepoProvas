@@ -34,6 +34,6 @@ export default class Teacher {
 	}
 
 	getExams() {
-		return this.exams;
+		return this.exams.map((exam) => exam.getExamWithSubject());
 	}
 }
