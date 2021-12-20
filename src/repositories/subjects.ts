@@ -1,11 +1,17 @@
 import { getRepository } from 'typeorm';
 import Subject from './entities/Subject';
 
-async function findSubjectById(subjectId: number) {
+async function findSubjectExams(subjectId: number) {
 	return getRepository(Subject).findOne({
 		where: { id: subjectId },
 		relations: ['exams', 'exams.teacher'],
 	});
 }
 
-export default { findSubjectById };
+async function findSubjectById(subjectId: number) {
+	return getRepository(Subject).findOne({
+		id: subjectId,
+	});
+}
+
+export default { findSubjectExams, findSubjectById };

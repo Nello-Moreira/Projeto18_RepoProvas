@@ -4,7 +4,7 @@ import NoContentError from '../errors/NoContent';
 import NotFoundError from '../errors/NotFound';
 
 async function findSubjectExams(subjectId: number) {
-	const subject = await subjectsRepository.findSubjectById(subjectId);
+	const subject = await subjectsRepository.findSubjectExams(subjectId);
 
 	if (!subject) {
 		throw new NotFoundError(`There are no subjects with id ${subjectId}`);
@@ -19,4 +19,14 @@ async function findSubjectExams(subjectId: number) {
 	return exams;
 }
 
-export default { findSubjectExams };
+async function findSubject(subjectId: number) {
+	const subject = await subjectsRepository.findSubjectById(subjectId);
+
+	if (!subject) {
+		throw new NotFoundError(`There is no subject with id ${subjectId}`);
+	}
+
+	return subject;
+}
+
+export default { findSubjectExams, findSubject };

@@ -1,6 +1,6 @@
+import teachersRepository from '../repositories/teachers';
 import NoContentError from '../errors/NoContent';
 import NotFoundError from '../errors/NotFound';
-import teachersRepository from '../repositories/teachers';
 
 async function findTeacherExams(teacherId: number) {
 	const teacher = await teachersRepository.findTeacherById(teacherId);
@@ -18,4 +18,14 @@ async function findTeacherExams(teacherId: number) {
 	return exams;
 }
 
-export default { findTeacherExams };
+async function findTeacher(teacherId: number) {
+	const teacher = await teachersRepository.findTeacherById(teacherId);
+
+	if (!teacher) {
+		throw new NotFoundError(`There is no teacher with id ${teacherId}`);
+	}
+
+	return teacher;
+}
+
+export default { findTeacherExams, findTeacher };
