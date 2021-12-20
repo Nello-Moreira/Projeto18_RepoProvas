@@ -1,14 +1,13 @@
 import supertest from 'supertest';
 import { getRepository } from 'typeorm';
 import server, { init } from '../../src/server';
-
 import HttpStatusCodes from '../../src/enums/statusCodes';
-import { createUser } from '../factories/user';
-
-import { insertUser, deleteAllUsers, deleteAllSessions } from '../repositories/users';
-import { closeConnection } from '../repositories/connection';
 import Session from '../../src/repositories/entities/Session';
 import User from '../../src/repositories/entities/User';
+
+import { createUser } from '../factories/user';
+import { insertUser, deleteAllUsers, deleteAllSessions } from '../repositories/users';
+import { closeConnection } from '../repositories/connection';
 
 const route = '/login';
 

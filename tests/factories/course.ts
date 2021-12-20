@@ -1,18 +1,9 @@
-import faker from 'faker';
+import createNewName from './newName';
 
-interface Course {
-	id:number;
-	name:string;
-}
+import ICourse from '../../src/protocols/Course';
 
-function createCourse(name:string = null):Course {
-	let newName = faker.random.alphaNumeric(20);
-
-	if (name) {
-		while (name === newName) {
-			newName = faker.random.alphaNumeric(20);
-		}
-	}
+function createCourse(name:string = null):ICourse {
+	const newName = createNewName(name);
 
 	return {
 		id: null,

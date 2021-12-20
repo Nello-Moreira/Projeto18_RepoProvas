@@ -1,20 +1,9 @@
 import faker from 'faker';
 import jwt from 'jsonwebtoken';
+import IUser from '../../src/protocols/User';
+import ISession from '../../src/protocols/Session';
 
-interface User {
-	id: number;
-	name: string;
-	email: string;
-	password: string;
-}
-
-interface Session {
-	id: number;
-	userId: number;
-	token: string;
-}
-
-function createUser(name:string = null):User {
+function createUser(name:string = null):IUser {
 	let newName = faker.name.firstName();
 
 	if (name) {
@@ -31,7 +20,7 @@ function createUser(name:string = null):User {
 	};
 }
 
-function createSession(user:User):Session {
+function createSession(user:IUser):ISession {
 	const token = jwt.sign(
 		{ name: user.name },
 		process.env.JWT_SECRET,
@@ -46,5 +35,5 @@ function createSession(user:User):Session {
 }
 
 export {
-	createUser, createSession, User, Session,
+	createUser, createSession,
 };

@@ -1,14 +1,13 @@
 import supertest from 'supertest';
 import server, { init } from '../../src/server';
-
 import HttpStatusCodes from '../../src/enums/statusCodes';
-import { createUser } from '../factories/user';
+import Session from '../../src/repositories/entities/Session';
 
+import { createUser } from '../factories/user';
 import {
 	insertUser, deleteAllUsers, deleteAllSessions, insertSession,
 } from '../repositories/users';
 import { closeConnection } from '../repositories/connection';
-import Session from '../../src/repositories/entities/Session';
 
 const route = '/logout';
 

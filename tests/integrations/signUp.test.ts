@@ -1,10 +1,10 @@
 import supertest from 'supertest';
 import { getRepository } from 'typeorm';
 import server, { init } from '../../src/server';
+import HttpStatusCodes from '../../src/enums/statusCodes';
 import User from '../../src/repositories/entities/User';
 
 import { createUser } from '../factories/user';
-
 import { insertUser, deleteAllUsers } from '../repositories/users';
 import { closeConnection } from '../repositories/connection';
 
@@ -36,7 +36,7 @@ describe('Tests for post /sign-up', () => {
 
 		const inserted = await getRepository(User).find({ email: user.email });
 
-		expect(response.status).toBe(201);
+		expect(response.status).toBe(HttpStatusCodes.created);
 		expect(inserted).toHaveLength(1);
 	});
 
@@ -46,7 +46,7 @@ describe('Tests for post /sign-up', () => {
 			email: user.email,
 			password: user.password,
 		});
-		expect(response.status).toBe(409);
+		expect(response.status).toBe(HttpStatusCodes.conflict);
 	});
 
 	it('should return status code 400 when an invalid body is provided', async () => {
@@ -55,6 +55,6 @@ describe('Tests for post /sign-up', () => {
 			email: '',
 			password: user.password,
 		});
-		expect(response.status).toBe(400);
+		expect(response.status).toBe(HttpStatusCodes.badRequest);
 	});
 });

@@ -1,22 +1,21 @@
 import supertest from 'supertest';
 import server, { init } from '../../src/server';
+import HttpStatusCodes from '../../src/enums/statusCodes';
+import ISession from '../../src/protocols/Session';
 
 import { createCourse } from '../factories/course';
-import { createUser, Session } from '../factories/user';
-
+import { createUser } from '../factories/user';
 import { insertCourse, deleteAllCourses } from '../repositories/courses';
 import {
 	insertUser, deleteAllUsers, insertSession, deleteAllSessions,
 } from '../repositories/users';
-
 import { closeConnection } from '../repositories/connection';
-import HttpStatusCodes from '../../src/enums/statusCodes';
 
 const route = '/courses';
 
 describe('Tests for get /courses', () => {
 	const user = createUser();
-	let session:Session;
+	let session:ISession;
 	const course = createCourse();
 
 	beforeAll(async () => {

@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import User from '../../src/repositories/entities/User';
 import Session from '../../src/repositories/entities/Session';
 
-import { User as IUser } from '../factories/user';
+import IUser from '../../src/protocols/User';
 
 async function insertUser(user:IUser) {
 	const newUser = getRepository(User).create({
