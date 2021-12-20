@@ -156,6 +156,7 @@ This will create a production, a development and a test database and envs variab
     }
 ]
 ```
+- status code: 204 no content (when there are no registered courses)
 
 </details>
 <br />
@@ -187,8 +188,9 @@ This will create a production, a development and a test database and envs variab
     }
 ]
 ```
-
-- status code: 404 not found (if invalid id)
+- status code: 204 no content (when there are no registered subjects)
+- status code: 400 not found (if invalid course id)
+- status code: 404 not found (if there are no courses with provided id)
 
 </details>
 <br />
@@ -213,13 +215,15 @@ This will create a production, a development and a test database and envs variab
 ```
 [
     {
+        "id": (number),
         "name": (string),
         "examsQuantity": (number)
     }
 ]
 ```
-
-- status code: 404 not found (if invalid id)
+- status code: 204 no content (when there are no registered professors)
+- status code: 400 not found (if invalid course id)
+- status code: 404 not found (if there are no courses with provided id)
 
 </details>
 <br />
@@ -255,7 +259,8 @@ This will create a production, a development and a test database and envs variab
 ]
 ```
 
-- status code: 404 not found (if invalid id)
+- status code: 400 not found (if invalid subject id)
+- status code: 404 not found (if there are no subjects with provided id)
 
 </details>
 <br />
@@ -290,8 +295,8 @@ This will create a production, a development and a test database and envs variab
     }
 ]
 ```
-
-- status code: 404 not found (if invalid id)
+- status code: 400 not found (if invalid professor id)
+- status code: 404 not found (if there are no professors with provided id)
 
 </details>
 <br />
