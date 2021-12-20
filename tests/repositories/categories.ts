@@ -1,6 +1,7 @@
 import { getConnection, getRepository } from 'typeorm';
 
 import Category from '../../src/repositories/entities/Category';
+import ICategory from '../../src/protocols/Category';
 
 import { deleteAllExams } from './exams';
 
@@ -15,8 +16,8 @@ async function deleteAllCategories() {
 		.execute();
 }
 
-async function insertCategory(name:string) {
-	const newCategory = getRepository(Category).create({ name });
+async function insertCategory(category:ICategory) {
+	const newCategory = getRepository(Category).create(category);
 	return getRepository(Category).save(newCategory);
 }
 

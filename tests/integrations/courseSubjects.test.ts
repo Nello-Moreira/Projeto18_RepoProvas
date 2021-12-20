@@ -7,6 +7,7 @@ import ISubject from '../../src/protocols/Subject';
 import { createCourse } from '../factories/course';
 import { createUser } from '../factories/user';
 import { createSeason } from '../factories/season';
+import { createSubject } from '../factories/subject';
 import {
 	insertUser, deleteAllUsers, insertSession, deleteAllSessions,
 } from '../repositories/users';
@@ -14,7 +15,6 @@ import { closeConnection } from '../repositories/connection';
 import { insertCourse, deleteAllCourses } from '../repositories/courses';
 import { deleteAllSeasons, insertSeason } from '../repositories/seasons';
 import { deleteAllSubjects, insertSubject } from '../repositories/subjects';
-import { createSubject } from '../factories/subject';
 
 const route = '/courses/:id/subjects';
 
