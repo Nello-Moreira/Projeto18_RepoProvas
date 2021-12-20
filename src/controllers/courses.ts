@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
+import coursesService from '../services/courses';
+
 import HttpStatusCodes from '../enums/statusCodes';
 import NoContentError from '../errors/NoContent';
 
@@ -9,7 +11,9 @@ async function getCourses(
 	next: NextFunction
 ) {
 	try {
-		return response.sendStatus(HttpStatusCodes.notImplemented);
+		const courses = await coursesService.findCourses();
+
+		return response.status(HttpStatusCodes.ok).send(courses);
 	} catch (error) {
 		if (error instanceof NoContentError) {
 			return response.sendStatus(HttpStatusCodes.noContent);

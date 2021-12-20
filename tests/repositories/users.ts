@@ -4,7 +4,9 @@ import jwt from 'jsonwebtoken';
 import User from '../../src/repositories/entities/User';
 import Session from '../../src/repositories/entities/Session';
 
-async function insertUser(user:{ id:number, name:string, email:string, password:string }) {
+import { User as IUser } from '../factories/user';
+
+async function insertUser(user:IUser) {
 	const newUser = getRepository(User).create({
 		name: user.name,
 		email: user.email,
@@ -32,7 +34,7 @@ async function deleteAllSessions() {
 		.execute();
 }
 
-async function insertSession(user:{ id:number, name:string, email:string, password:string }) {
+async function insertSession(user:IUser) {
 	const token = jwt.sign(
 		{ name: user.name },
 		process.env.JWT_SECRET,
