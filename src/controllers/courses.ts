@@ -36,8 +36,8 @@ async function getSubjects(
 	}
 
 	try {
-		const course = await coursesService.findCourseSubjects(courseId);
-		return response.status(HttpStatusCodes.ok).send(course);
+		const subjects = await coursesService.findCourseSubjects(courseId);
+		return response.status(HttpStatusCodes.ok).send(subjects);
 	} catch (error) {
 		if (error instanceof NotFoundError) {
 			return response.status(HttpStatusCodes.notFound).send(error.message);

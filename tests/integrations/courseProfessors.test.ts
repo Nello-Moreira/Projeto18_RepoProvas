@@ -15,18 +15,22 @@ import { insertCourse, deleteAllCourses } from '../repositories/courses';
 import { deleteAllSeasons, insertSeason } from '../repositories/seasons';
 import { deleteAllSubjects, insertSubject } from '../repositories/subjects';
 import { createSubject } from '../factories/subject';
+import { createTeacher } from '../factories/teacher';
+import { deleteAllTeachers, insertTeacher } from '../repositories/teachers';
 
-const route = '/courses/:id/subjects';
+const route = '/courses/:id/professors';
 
-describe('Tests for get /courses/:id/subjects', () => {
+describe('Tests for get /courses/:id/professors', () => {
 	const user = createUser();
 	let course = createCourse();
 	let season = createSeason();
+	let teacher = createTeacher();
 	let session:ISession;
 	let subject:ISubject;
 
 	beforeAll(async () => {
 		await init();
+		await deleteAllTeachers();
 		await deleteAllSubjects();
 		await deleteAllCourses();
 		await deleteAllSeasons();
@@ -42,13 +46,16 @@ describe('Tests for get /courses/:id/subjects', () => {
 
 		subject = createSubject(course, season);
 		subject = await insertSubject(subject);
+
+		teacher = await insertTeacher(teacher, subject);
 	});
 
 	afterEach(async () => {
-		await deleteAllSubjects();
+		await deleteAllTeachers();
 	});
 
 	afterAll(async () => {
+		await deleteAllSubjects();
 		await deleteAllCourses();
 		await deleteAllSeasons();
 		await deleteAllSessions();
@@ -65,9 +72,8 @@ describe('Tests for get /courses/:id/subjects', () => {
 		expect(response.status).toBe(HttpStatusCodes.ok);
 		expect(response.body).toHaveLength(1);
 		expect(response.body[0]).toEqual({
-			id: subject.id,
-			name: subject.name,
-			season: season.name,
+			id: teacher.id,
+			name: teacher.name,
 			examsQuantity: 0,
 		});
 	});
@@ -88,7 +94,7 @@ describe('Tests for get /courses/:id/subjects', () => {
 		expect(response.status).toBe(HttpStatusCodes.notFound);
 	});
 
-	it('should return status code 204 when there are no subjects', async () => {
+	it('should return status code 204 when there are no teachers', async () => {
 		const response = await supertest(server)
 			.get(route.replace(':id', `${course.id}`))
 			.set('authorization', `Bearer ${session.token}`);
