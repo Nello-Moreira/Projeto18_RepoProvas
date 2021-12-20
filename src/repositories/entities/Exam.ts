@@ -44,7 +44,7 @@ export default class Exam {
 			name: this.name,
 			fileUrl: this.fileUrl,
 			category: this.category.getCategory().name,
-			teacher: this.teacher?.getTeacherName().name || null,
+			professor: this.teacher?.getTeacherName().name || null,
 			subject: this.subject?.getSubjectName().name || null,
 		};
 	}
@@ -55,7 +55,7 @@ export default class Exam {
 			name: this.name,
 			fileUrl: this.fileUrl,
 			category: this.category.getCategory().name,
-			teacher: this.teacher.getTeacherName().name,
+			professor: this.teacher.getTeacherName().name,
 		};
 	}
 

@@ -67,4 +67,8 @@ export default class Subject {
 			name: this.name,
 		};
 	}
+
+	getExams() {
+		return this.exams.map((exam) => exam.getExamWithTeacher());
+	}
 }
