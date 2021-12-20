@@ -57,7 +57,7 @@ export default class Subject {
 		return {
 			id: this.id,
 			name: this.name,
-			season: this.season.getSeason(),
+			season: this.season.getSeason().name,
 			examsQuantity: this.exams.length,
 		};
 	}

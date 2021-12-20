@@ -5,4 +5,8 @@ async function findCourses() {
 	return getRepository(Course).find();
 }
 
-export default { findCourses };
+async function findCourseSubjects(courseId: number) {
+	return getRepository(Course).findOne({ where: { id: courseId }, relations: ['subjects'] });
+}
+
+export default { findCourses, findCourseSubjects };
