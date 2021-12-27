@@ -45,9 +45,9 @@ async function login(request: Request, response: Response, next: NextFunction) {
 	}
 
 	try {
-		const token = await usersService.login(loginBody);
+		const userInfo = await usersService.login(loginBody);
 
-		return response.status(HttpStatusCodes.ok).send(token);
+		return response.status(HttpStatusCodes.ok).send(userInfo);
 	} catch (error) {
 		if (error instanceof NotFoundError) {
 			return response.status(HttpStatusCodes.notFound).send(error.message);

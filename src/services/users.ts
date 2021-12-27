@@ -22,7 +22,9 @@ async function signUp(user: UserCreation): Promise<boolean> {
 	return true;
 }
 
-async function login(user: UserLogin): Promise<{ token: string }> {
+async function login(
+	user: UserLogin
+): Promise<{ name: string; token: string }> {
 	const existingUser = await usersRepository.findUserByEmail(user.email);
 
 	if (!existingUser) {
@@ -38,7 +40,7 @@ async function login(user: UserLogin): Promise<{ token: string }> {
 	});
 
 	await usersRepository.createSession({ userId: existingUser.id, token });
-	return { token };
+	return { name: existingUser.name, token };
 }
 
 async function logout(token: string): Promise<boolean> {

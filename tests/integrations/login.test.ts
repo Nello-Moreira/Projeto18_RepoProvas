@@ -5,7 +5,11 @@ import HttpStatusCodes from '../../src/enums/statusCodes';
 import Session from '../../src/repositories/entities/Session';
 
 import { createUser } from '../factories/user';
-import { insertUser, deleteAllUsers, deleteAllSessions } from '../repositories/users';
+import {
+	insertUser,
+	deleteAllUsers,
+	deleteAllSessions,
+} from '../repositories/users';
 import { closeConnection } from '../repositories/connection';
 
 const route = '/login';
@@ -68,6 +72,8 @@ describe('Tests for post /login', () => {
 		const inserted = await getRepository(Session).find({ userId: user.id });
 
 		expect(response.status).toBe(HttpStatusCodes.ok);
+		expect(response.body).toHaveProperty('name');
+		expect(response.body.name).toBe(user.name);
 		expect(response.body).toHaveProperty('token');
 		expect(inserted).toHaveLength(1);
 	});
