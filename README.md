@@ -102,6 +102,42 @@ This will create a production, a development and a test database and envs variab
 </details>
 <br />
 
+## Check session:
+
+### Verify if token is still valid
+
+<details>
+<summary>Request</summary>
+
+- route: /session
+- method: post
+- body:
+
+```
+{
+    "token": (string)
+}
+```
+
+</details>
+
+<details>
+<summary>Response</summary>
+
+- status code: 200 ok
+- body:
+
+```
+{
+    valid: (boolean)
+}
+```
+
+- status code: 400 bad request (for invalid body)
+
+</details>
+<br />
+
 ## Logout:
 
 ### End session
@@ -124,7 +160,7 @@ This will create a production, a development and a test database and envs variab
 <summary>Response</summary>
 
 - status code: 200 ok
-- status code: 404 not found (for invalid token)
+- status code: 401 unauthorized (for invalid or expired token)
 
 </details>
 <br />
@@ -156,7 +192,9 @@ This will create a production, a development and a test database and envs variab
     }
 ]
 ```
+
 - status code: 204 no content (when there are no registered courses)
+- status code: 401 unauthorized (for invalid or expired token)
 
 </details>
 <br />
@@ -188,8 +226,10 @@ This will create a production, a development and a test database and envs variab
     }
 ]
 ```
+
 - status code: 204 no content (when there are no registered subjects)
-- status code: 400 not found (if invalid course id)
+- status code: 400 bad request (if invalid course id)
+- status code: 401 unauthorized (for invalid or expired token)
 - status code: 404 not found (if there are no courses with provided id)
 
 </details>
@@ -221,8 +261,10 @@ This will create a production, a development and a test database and envs variab
     }
 ]
 ```
+
 - status code: 204 no content (when there are no registered professors)
-- status code: 400 not found (if invalid course id)
+- status code: 400 bad request (if invalid course id)
+- status code: 401 unauthorized (for invalid or expired token)
 - status code: 404 not found (if there are no courses with provided id)
 
 </details>
@@ -259,7 +301,8 @@ This will create a production, a development and a test database and envs variab
 ]
 ```
 
-- status code: 400 not found (if invalid subject id)
+- status code: 400 bad request (if invalid subject id)
+- status code: 401 unauthorized (for invalid or expired token)
 - status code: 404 not found (if there are no subjects with provided id)
 
 </details>
@@ -295,7 +338,9 @@ This will create a production, a development and a test database and envs variab
     }
 ]
 ```
-- status code: 400 not found (if invalid professor id)
+
+- status code: 400 bad request (if invalid professor id)
+- status code: 401 unauthorized (for invalid or expired token)
 - status code: 404 not found (if there are no professors with provided id)
 
 </details>
@@ -329,6 +374,7 @@ This will create a production, a development and a test database and envs variab
 <summary>Response</summary>
 
 - status code: 201 ok
+- status code: 401 unauthorized (for invalid or expired token)
 - status code: 404 not found (if invalid category, professor or subject)
 
 </details>

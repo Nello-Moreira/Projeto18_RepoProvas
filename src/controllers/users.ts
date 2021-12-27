@@ -17,7 +17,9 @@ async function signUp(
 	const signUpError = isInvalidSignUp(signUpBody);
 
 	if (signUpError) {
-		return response.status(HttpStatusCodes.badRequest).send(signUpError.message);
+		return response
+			.status(HttpStatusCodes.badRequest)
+			.send(signUpError.message);
 	}
 
 	try {
@@ -68,4 +70,34 @@ async function logout(
 	}
 }
 
-export default { signUp, login, logout };
+async function isValidSession(
+	request: Request,
+	response: Response,
+	next: NextFunction
+) {
+	const { token } = request.body;
+
+	if (!token || typeof token !== typeof '') {
+		return response
+			.status(HttpStatusCodes.badRequest)
+			.send("It's necessary to provide a valid token");
+	}
+
+	try {
+		const session = await usersService.getSession(token);
+
+		if (session.id) {
+			return response.status(HttpStatusCodes.ok).send({ valid: true });
+		}
+		return response.status(HttpStatusCodes.ok).send({ valid: false });
+	} catch (error) {
+		return next(error);
+	}
+}
+
+export default {
+	signUp,
+	login,
+	logout,
+	isValidSession,
+};

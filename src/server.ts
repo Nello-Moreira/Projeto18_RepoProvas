@@ -8,6 +8,7 @@ import dbConnect from './repositories/connection';
 import databaseErrorMiddleware from './middlewares/databaseError';
 import authorizationMiddleware from './middlewares/authorization';
 
+import sessionRouter from './routers/session';
 import signUpRouter from './routers/signUp';
 import loginRouter from './routers/login';
 import logoutRouter from './routers/logout';
@@ -19,6 +20,8 @@ import coursesRouter from './routers/courses';
 const server = express();
 server.use(cors());
 server.use(express.json());
+
+server.use('/session', sessionRouter);
 
 server.use('/sign-up', signUpRouter);
 
