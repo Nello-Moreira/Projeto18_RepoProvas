@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
 import HttpStatusCodes from '../enums/statusCodes';
-import usersRepository from '../repositories/users';
+import usersService from '../services/users';
 
 export default async function authorizationMiddleware(
 	request: Request,
@@ -17,29 +16,18 @@ export default async function authorizationMiddleware(
 	}
 
 	if (typeof token !== 'string') {
-		return response
-			.status(HttpStatusCodes.badRequest)
-			.send('Invalid token');
+		return response.status(HttpStatusCodes.badRequest).send('Invalid token');
 	}
 
-	try {
-		jwt.verify(token, process.env.JWT_SECRET);
+	const session = await usersService.getSession(token);
 
-		const activeSession = await usersRepository.findSessionByToken(token);
-
-		if (!activeSession) {
-			return response
-				.status(HttpStatusCodes.unauthorized)
-				.send('Invalid or expired token');
-		}
-
-		response.locals = { userId: activeSession.userId, token };
-	} catch (error) {
-		await usersRepository.deleteSession(token);
+	if (!session.id) {
 		return response
 			.status(HttpStatusCodes.unauthorized)
 			.send('Invalid or expired token');
 	}
+
+	response.locals = session;
 
 	return next();
 }
