@@ -1,15 +1,16 @@
 import { getRepository } from 'typeorm';
+import Category from './entities/Category';
 import Exam from './entities/Exam';
 
 export interface PostedExam {
-	name:string;
-	fileUrl:string;
-	categoryId:number;
+	name: string;
+	fileUrl: string;
+	categoryId: number;
 	subjectId: number;
-	professorId:number;
+	professorId: number;
 }
 
-async function insertExam(exam:PostedExam) {
+async function insertExam(exam: PostedExam) {
 	const newExam = getRepository(Exam).create({
 		name: exam.name,
 		fileUrl: exam.fileUrl,
@@ -25,4 +26,8 @@ async function findExamByFileUrl(fileUrl: string) {
 	return getRepository(Exam).findOne({ fileUrl });
 }
 
-export default { insertExam, findExamByFileUrl };
+async function findCategories(): Promise<Category[]> {
+	return getRepository(Category).find();
+}
+
+export default { insertExam, findExamByFileUrl, findCategories };

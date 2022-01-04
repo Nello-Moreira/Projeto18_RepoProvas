@@ -6,6 +6,7 @@ import HttpStatusCodes from '../enums/statusCodes';
 import { isInvalidExam } from '../validation/exams';
 import ConflictError from '../errors/Conflict';
 import NotFoundError from '../errors/NotFound';
+import NoContentError from '../errors/NoContent';
 
 async function sendExams(
 	request: Request,
@@ -37,4 +38,22 @@ async function sendExams(
 	}
 }
 
-export default { sendExams };
+async function getCategories(
+	request: Request,
+	response: Response,
+	next: NextFunction
+) {
+	try {
+		const categories = await examsService.findCategories();
+
+		return response.status(HttpStatusCodes.ok).send(categories);
+	} catch (error) {
+		if (error instanceof NoContentError) {
+			return response.sendStatus(HttpStatusCodes.noContent);
+		}
+
+		return next(error);
+	}
+}
+
+export default { sendExams, getCategories };

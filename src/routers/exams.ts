@@ -5,4 +5,6 @@ const examsRouter = express.Router();
 
 examsRouter.post('/', examsController.sendExams);
 
+examsRouter.get('/categories', examsController.getCategories);
+
 export default examsRouter;
