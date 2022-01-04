@@ -301,6 +301,7 @@ This will create a production, a development and a test database and envs variab
 ]
 ```
 
+- status code: 204 no content
 - status code: 400 bad request (if invalid subject id)
 - status code: 401 unauthorized (for invalid or expired token)
 - status code: 404 not found (if there are no subjects with provided id)
@@ -339,6 +340,7 @@ This will create a production, a development and a test database and envs variab
 ]
 ```
 
+- status code: 204 no content
 - status code: 400 bad request (if invalid professor id)
 - status code: 401 unauthorized (for invalid or expired token)
 - status code: 404 not found (if there are no professors with provided id)
@@ -347,6 +349,38 @@ This will create a production, a development and a test database and envs variab
 <br />
 
 ## Exams:
+
+### Get exams categories
+
+<details>
+<summary>Request</summary>
+
+- route: /exams/categories
+- method: get
+- authorization: Bearer token
+
+</details>
+
+<details>
+<summary>Response</summary>
+
+- status code: 200 ok
+- body:
+
+```
+[
+    {
+        "id": (number),
+        "name": (string)
+    }
+]
+```
+
+- status code: 204 no content
+- status code: 401 unauthorized (for invalid or expired token)
+
+</details>
+<br />
 
 ### Post an exam
 
@@ -361,9 +395,9 @@ This will create a production, a development and a test database and envs variab
 ```
 {
     "name": (string),
-    "category": (string),
-    "professor": (string),
-    "subject": (string),
+    "category": (number),
+    "professor": (number),
+    "subject": (number),
     "fileUrl": (string)
 }
 ```
