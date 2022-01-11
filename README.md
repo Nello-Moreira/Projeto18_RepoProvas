@@ -395,9 +395,9 @@ This will create a production, a development and a test database and envs variab
 ```
 {
     "name": (string),
-    "category": (number),
-    "professor": (number),
-    "subject": (number),
+    "categoryId": (number),
+    "professorId": (number),
+    "subjectId": (number),
     "fileUrl": (string)
 }
 ```
