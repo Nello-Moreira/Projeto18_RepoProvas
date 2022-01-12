@@ -8,8 +8,6 @@ if (
 }
 
 export default async function dbConnect() {
-	console.log({ url: process.env.DATABASE_URL });
-
 	const connectionManager = await getConnectionManager();
 	const connection = connectionManager.create({
 		name: 'default',
@@ -17,7 +15,7 @@ export default async function dbConnect() {
 		url: process.env.DATABASE_URL,
 		entities: [
 			`${
-				process.env.NODE_ENV === 'production' ? 'dist' : 'src'
+				process.env.NODE_ENV === 'production' ? 'dist/src' : 'src'
 			}/repositories/entities/*.*`,
 		],
 		extra: { ssl: process.env.NODE_ENV === 'production', rejectUnauthorized: false },
