@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "NODE_ENV=production node ./dist/src/index.js",
+		"start": "NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 node ./dist/src/index.js",
 		"start:development": "NODE_ENV=development npx nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/index.ts\"",
 		"start:test_driven": "NODE_ENV=test npx jest --watch -i",
 		"test": "NODE_ENV=test npx jest -i",
