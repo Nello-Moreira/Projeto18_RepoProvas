@@ -8,6 +8,8 @@ if (
 }
 
 export default async function dbConnect() {
+	console.log({ url: process.env.DATABASE_URL });
+
 	const connectionManager = await getConnectionManager();
 	const connection = connectionManager.create({
 		name: 'default',
