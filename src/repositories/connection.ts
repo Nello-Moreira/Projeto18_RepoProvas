@@ -18,7 +18,7 @@ export default async function dbConnect() {
 				process.env.NODE_ENV === 'production' ? 'dist' : 'src'
 			}/repositories/entities/*.*`,
 		],
-		ssl: process.env.NODE_ENV === 'production',
+		extra: { ssl: process.env.NODE_ENV === 'production', rejectUnauthorized: false },
 	});
 	await connection.connect();
 	return connection;
