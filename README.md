@@ -1,6 +1,15 @@
-# SERVER TEMPLATE
+# Projeto18_RepoProvas (front-end)
 
-This is a template for building a web server with postgreSQL as database.
+Would you like to make your academic life easier? This project is about that. Here you can share and view past exams to better prepare for upcoming exams.
+
+This is the fron-end repository. You can check the front-end repository [here](https://github.com/Nello-Moreira/Projeto18_RepoProvas_front-end)
+
+## Try it yourself!
+
+You can access the [_project url_](https://projeto18-repoprovas-frontend.vercel.app/) and create a profile or use this example one:
+
+-   e-mail: teste@teste.com
+-   password: 123
 
 ## How to run
 
